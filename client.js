@@ -16,7 +16,7 @@ const packageDefinition = protoLoader.loadSync(
         oneofs: true,
     }
 );
-const { VideogameService } = grpc.loadPackageDefinition(packageDefinition);
+const { VideogameService, UserService } = grpc.loadPackageDefinition(packageDefinition);
 
 const port = process.env.PORT || 3000;
 
@@ -25,7 +25,13 @@ const client = new VideogameService(
     grpc.credentials.createInsecure()
 );
 
-module.exports = { client };
+const clientUser = new UserService(
+    `localhost:${port}`,
+    grpc.credentials.createInsecure()
+);
+
+module.exports = { client, clientUser};
 
 //  c.client.add( { id: 3432342 , name: "test!" } , (e,r) => console.log(r) )
-//  c.client.all(null , (e,r) => console.log(r.videogames.reverse()[0]) )
+ client.all(null , (e,r) => console.log(r.videogames.reverse()[0]) )
+ clientUser.all(null , (e,r) => console.log(r.users.reverse()[0]) )

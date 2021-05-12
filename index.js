@@ -16,17 +16,21 @@ const packageDefinition = protoLoader.loadSync(
         oneofs: true,
     }
 );
-const { VideogameService } = grpc.loadPackageDefinition(packageDefinition);
+const { VideogameService, UserService } = grpc.loadPackageDefinition(packageDefinition);
 
 const port = process.env.PORT || 3000;
 
 const server = new grpc.Server();
 
-const { all, add } = require("./controller");
-
+const videogamesFunctions = require("./controller");
+const userFunctions = require("./user.controller");
 server.addService(VideogameService.service, {
-    all: all,
-    add: add,
+    all: videogamesFunctions.all,
+    add: videogamesFunctions.add,
+});
+
+server.addService(UserService.service, {
+    all: userFunctions.all,
 });
 
 server.bindAsync(

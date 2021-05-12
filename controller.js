@@ -20,6 +20,7 @@ async function all(call, callback) {
     callback(null, { videogames: rows });
 }
 
+
 module.exports = {
     all,
     add,

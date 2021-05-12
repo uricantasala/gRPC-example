@@ -7,6 +7,11 @@ service VideogameService {
     rpc all(Empty) returns (VideogameList) {}
 }
 
+service UserService {
+    rpc add(User) returns (UserResponse) {}
+    rpc all(Empty) returns (UserList) {}
+}
+
 message Empty {}
 
 message Videogame{
@@ -14,6 +19,23 @@ message Videogame{
     string name = 2;
 }
 
+message User{
+    string id = 1;
+    string name = 2;
+    string login = 3;
+    string password = 4;
+}
+
+message UserResponse{
+    string id = 1;
+    string name = 2;
+    string login = 3;
+}
+
 message VideogameList {
     repeated Videogame videogames = 1;
+}
+
+message UserList {
+    repeated UserResponse users = 1;
 }
