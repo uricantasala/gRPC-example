@@ -13,9 +13,20 @@ async function add(call, callback) {
 }
 async function all(call, callback) {
     console.log("all videogames");
-    const [rows, fields] = await conn
+    let [rows, fields] = await conn
         .promise()
         .query(`SELECT * FROM videogames`);
+        const [rows2, fields2] = await conn
+        .promise()
+        .query(`SELECT * FROM users inner join scores on scores.user=users.id`);
+    console.log(rows)
+    console.log(rows2)
+    rows.forEach((v) => {
+        v.users = []
+        rows2.forEach((u) => {
+            if(v.id=u.videogame) v.users.push(u)
+        })
+    })
 
     callback(null, { videogames: rows });
 }
