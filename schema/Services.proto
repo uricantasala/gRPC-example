@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+import "UserService.proto";
+
+service VideogameService {
+    rpc add(Videogame) returns (Videogame) {}
+    rpc all(Empty) returns (VideogameList) {}
+}
+
+message Empty {}
+
+message Videogame{
+    string id = 1;
+    string name = 2;
+}
+
+message VideogameList {
+    repeated Videogame videogames = 1;
+}
